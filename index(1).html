@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Harry Kakadiya — Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0a0a0f;
+    --bg2: #111118;
+    --bg3: #16161f;
+    --border: rgba(255,255,255,0.07);
+    --border2: rgba(255,255,255,0.12);
+    --text: #f0eff5;
+    --muted: #8b8a99;
+    --accent: #7f6df2;
+    --accent2: #5dcaa5;
+    --accent3: #f0997b;
+    --accent4: #d4537e;
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.4;
+  }
+
+  .page { position: relative; z-index: 1; max-width: 860px; margin: 0 auto; padding: 0 24px 80px; }
+
+  nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 28px 0 48px;
+    border-bottom: 0.5px solid var(--border);
+    margin-bottom: 64px;
+  }
+  .logo {
+    font-family: 'Syne', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text);
+  }
+  .nav-links { display: flex; gap: 28px; }
+  .nav-links a {
+    font-size: 13px;
+    color: var(--muted);
+    text-decoration: none;
+    letter-spacing: 0.03em;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--text); }
+
+  .hero { margin-bottom: 80px; }
+  .hero-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(127,109,242,0.1);
+    border: 0.5px solid rgba(127,109,242,0.3);
+    border-radius: 100px;
+    padding: 5px 14px;
+    font-size: 11px;
+    font-weight: 500;
+    color: #a89ef7;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+  }
+  .dot { width: 6px; height: 6px; border-radius: 50%; background: #5dcaa5; animation: pulse 2s ease-in-out infinite; display: inline-block; }
+  @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(0.85)} }
+
+  h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(42px, 7vw, 68px);
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    margin-bottom: 20px;
+  }
+  h1 span.grad {
+    background: linear-gradient(135deg, #7f6df2 0%, #5dcaa5 50%, #f0997b 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .hero-sub {
+    font-size: 17px;
+    color: var(--muted);
+    line-height: 1.7;
+    max-width: 520px;
+    margin-bottom: 36px;
+  }
+  .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 11px 22px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 500;
+    text-decoration: none;
+    letter-spacing: 0.02em;
+    transition: all 0.2s;
+    cursor: pointer;
+    border: none;
+  }
+  .btn-primary { background: var(--accent); color: #fff; }
+  .btn-primary:hover { background: #6b5de0; transform: translateY(-1px); }
+  .btn-ghost { background: transparent; color: var(--muted); border: 0.5px solid var(--border2); }
+  .btn-ghost:hover { color: var(--text); border-color: rgba(255,255,255,0.25); }
+
+  .section-label {
+    font-family: 'Syne', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 28px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .section-label::after { content: ''; flex: 1; height: 0.5px; background: var(--border); }
+
+  .projects-grid { display: grid; gap: 16px; margin-bottom: 64px; }
+  .project-card {
+    background: var(--bg2);
+    border: 0.5px solid var(--border);
+    border-radius: 14px;
+    padding: 28px 32px;
+    transition: border-color 0.2s, transform 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+  .project-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    opacity: 0;
+    transition: opacity 0.3s;
+    border-radius: 14px 14px 0 0;
+  }
+  .project-card:hover { border-color: var(--border2); transform: translateY(-2px); }
+  .project-card:hover::before { opacity: 1; }
+  .card-vc::before { background: linear-gradient(90deg, #7f6df2, #5dcaa5); }
+  .card-orbital::before { background: linear-gradient(90deg, #5dcaa5, #378add); }
+  .card-poker::before { background: linear-gradient(90deg, #f0997b, #d4537e); }
+  .card-safehaven::before { background: linear-gradient(90deg, #d4537e, #7f6df2); }
+
+  .card-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; }
+  .card-icon {
+    width: 38px; height: 38px; border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px; margin-bottom: 16px; flex-shrink: 0;
+  }
+  .icon-purple { background: rgba(127,109,242,0.15); }
+  .icon-teal   { background: rgba(93,202,165,0.15); }
+  .icon-coral  { background: rgba(240,153,123,0.15); }
+  .icon-pink   { background: rgba(212,83,126,0.15); }
+
+  .card-title { font-family: 'Syne', sans-serif; font-size: 18px; font-weight: 700; margin-bottom: 8px; letter-spacing: -0.01em; }
+  .card-role { font-size: 11px; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); margin-bottom: 12px; }
+  .card-desc { font-size: 14px; color: var(--muted); line-height: 1.65; margin-bottom: 20px; }
+  .card-highlights { display: flex; flex-direction: column; gap: 6px; margin-bottom: 20px; }
+  .highlight { font-size: 13px; color: #c4c3d0; display: flex; align-items: flex-start; gap: 8px; }
+  .highlight::before { content: '→'; color: var(--accent); font-size: 12px; margin-top: 1px; flex-shrink: 0; }
+
+  .card-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 20px; }
+  .tag { font-size: 11px; font-weight: 500; padding: 4px 10px; border-radius: 100px; border: 0.5px solid var(--border2); color: var(--muted); letter-spacing: 0.02em; }
+
+  .card-footer { display: flex; align-items: center; justify-content: space-between; padding-top: 16px; border-top: 0.5px solid var(--border); }
+  .card-links { display: flex; gap: 8px; }
+  .link-btn {
+    display: inline-flex; align-items: center; gap: 5px;
+    font-size: 12px; color: var(--muted); text-decoration: none;
+    padding: 5px 12px; border-radius: 6px; border: 0.5px solid var(--border);
+    transition: all 0.2s;
+  }
+  .link-btn:hover { color: var(--text); border-color: var(--border2); }
+  .link-btn svg { width: 12px; height: 12px; }
+
+  .status-badge { font-size: 10px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; padding: 3px 10px; border-radius: 100px; }
+  .status-live { background: rgba(93,202,165,0.12); color: #5dcaa5; border: 0.5px solid rgba(93,202,165,0.3); }
+  .status-active { background: rgba(127,109,242,0.12); color: #a89ef7; border: 0.5px solid rgba(127,109,242,0.3); }
+  .status-built { background: rgba(139,138,153,0.12); color: var(--muted); border: 0.5px solid var(--border); }
+
+  .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 10px; margin-bottom: 64px; }
+  .skill-group { background: var(--bg2); border: 0.5px solid var(--border); border-radius: 10px; padding: 16px; }
+  .skill-group-label { font-size: 10px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; }
+  .skill-items { display: flex; flex-wrap: wrap; gap: 6px; }
+  .skill-item { font-size: 12px; color: #c4c3d0; background: var(--bg3); padding: 3px 9px; border-radius: 5px; }
+
+  .about-strip { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 64px; }
+  .about-card { background: var(--bg2); border: 0.5px solid var(--border); border-radius: 12px; padding: 22px 24px; }
+  .about-card-label { font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
+  .about-card-val { font-family: 'Syne', sans-serif; font-size: 15px; font-weight: 600; line-height: 1.4; }
+
+  .contact-row {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 28px 32px; background: var(--bg2); border: 0.5px solid var(--border);
+    border-radius: 14px; flex-wrap: wrap; gap: 16px;
+  }
+  .contact-left h3 { font-family: 'Syne', sans-serif; font-size: 20px; font-weight: 700; margin-bottom: 4px; }
+  .contact-left p { font-size: 14px; color: var(--muted); }
+  .contact-links { display: flex; gap: 10px; flex-wrap: wrap; }
+
+  @media (max-width: 600px) {
+    .about-strip { grid-template-columns: 1fr; }
+    .project-card { padding: 22px 20px; }
+    nav { flex-direction: column; gap: 16px; align-items: flex-start; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <nav>
+    <div class="logo">Harry Kakadiya</div>
+    <div class="nav-links">
+      <a href="#projects">Work</a>
+      <a href="#skills">Skills</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-tag">
+      <span class="dot"></span>
+      Open to full-time roles · SF Bay Area
+    </div>
+    <h1>Software Engineer<br><span class="grad">AI Systems &amp; Backend</span></h1>
+    <p class="hero-sub">
+      CS senior at SFSU building production-grade AI agents, real-time systems, and backend infrastructure.
+      Passionate about the intersection of AI, space, and test automation.
+    </p>
+    <div class="hero-actions">
+      <a href="https://linkedin.com/in/harry-kakadiya-836768295" target="_blank" class="btn btn-primary">
+        <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
+        LinkedIn
+      </a>
+      <a href="mailto:harekrishna.kakadiya@gmail.com" class="btn btn-ghost">Get in touch</a>
+    </div>
+  </section>
+
+  <section id="projects">
+    <div class="section-label">Featured Projects</div>
+    <div class="projects-grid">
+
+      <div class="project-card card-vc">
+        <div class="card-header">
+          <div>
+            <div class="card-icon icon-purple">🗺️</div>
+            <div class="card-title">Vibe Check</div>
+            <div class="card-role">Team Lead · DB Admin · Full Stack</div>
+          </div>
+          <span class="status-badge status-active">Active</span>
+        </div>
+        <p class="card-desc">Location-based vibe discovery platform where users search, rate, and explore places by mood and atmosphere. Built as a CSC 648 capstone with a team of 6.</p>
+        <div class="card-highlights">
+          <div class="highlight">PostgreSQL 16 + PostGIS schema (13 tables, custom vibe_level enum) deployed on AWS EC2</div>
+          <div class="highlight">Led GitHub workflow: feature branches → dev integration → main; sole merge authority</div>
+          <div class="highlight">Vertical prototype with working signup, location search, and rating logic live on EC2</div>
+        </div>
+        <div class="card-tags">
+          <span class="tag">Node.js</span><span class="tag">PostgreSQL</span><span class="tag">PostGIS</span><span class="tag">AWS EC2</span><span class="tag">Express</span><span class="tag">React</span>
+        </div>
+        <div class="card-footer">
+          <div class="card-links">
+            <a class="link-btn" href="https://github.com/sfsu-csc-648-spring-2025/sfsu-csc-648-spring25-sb01-team-arkha" target="_blank">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.745 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+              GitHub
+            </a>
+          </div>
+          <span style="font-size:12px;color:var(--muted)">CSC 648 · Spring 2025</span>
+        </div>
+      </div>
+
+      <div class="project-card card-orbital">
+        <div class="card-header">
+          <div>
+            <div class="card-icon icon-teal">🛰️</div>
+            <div class="card-title">Orbital Debris Tracker</div>
+            <div class="card-role">Solo Build · Full Stack AI Agent</div>
+          </div>
+          <span class="status-badge status-live">Live</span>
+        </div>
+        <p class="card-desc">Production AI agent that tracks ISS position and space debris in real time using Claude tool calling, Space-Track.org TLE data, and Open Notify API.</p>
+        <div class="card-highlights">
+          <div class="highlight">Anthropic Claude tool-use integration with live orbital data feeds</div>
+          <div class="highlight">Full-stack deployment: React/TypeScript on Vercel + Node.js/Express on Railway</div>
+          <div class="highlight">Real-time ISS tracking with debris proximity analysis</div>
+        </div>
+        <div class="card-tags">
+          <span class="tag">Claude API</span><span class="tag">TypeScript</span><span class="tag">React</span><span class="tag">Node.js</span><span class="tag">Vercel</span><span class="tag">Railway</span>
+        </div>
+        <div class="card-footer">
+          <div class="card-links">
+            <a class="link-btn" href="https://orbital-debris-tracker-client.vercel.app" target="_blank">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/></svg>
+              Live Demo
+            </a>
+            <a class="link-btn" href="https://github.com/yaeger211202/orbital-debris-tracker" target="_blank">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.745 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+              GitHub
+            </a>
+          </div>
+          <span style="font-size:12px;color:var(--muted)">Personal · 2024</span>
+        </div>
+      </div>
+
+      <div class="project-card card-poker">
+        <div class="card-header">
+          <div>
+            <div class="card-icon icon-coral">🃏</div>
+            <div class="card-title">Texas Hold'em Poker</div>
+            <div class="card-role">DB Admin · Backend</div>
+          </div>
+          <span class="status-badge status-active">Active</span>
+        </div>
+        <p class="card-desc">Real-time multiplayer poker platform with full game logic, turn management, and live socket communication. Production-grade CI/CD with strict PR standards.</p>
+        <div class="card-highlights">
+          <div class="highlight">PostgreSQL schema design &amp; migrations with automated seed tooling</div>
+          <div class="highlight">Socket.io real-time game state synchronization across rooms</div>
+          <div class="highlight">Dockerized dev environment with automated end-to-end tooling</div>
+        </div>
+        <div class="card-tags">
+          <span class="tag">TypeScript</span><span class="tag">Socket.io</span><span class="tag">PostgreSQL</span><span class="tag">Docker</span><span class="tag">Node.js</span>
+        </div>
+        <div class="card-footer">
+          <div class="card-links">
+            <a class="link-btn" style="opacity:0.4;pointer-events:none">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+              Private Repo
+            </a>
+          </div>
+          <span style="font-size:12px;color:var(--muted)">CSC 667 · Spring 2025</span>
+        </div>
+      </div>
+
+      <div class="project-card card-safehaven">
+        <div class="card-header">
+          <div>
+            <div class="card-icon icon-pink">🏠</div>
+            <div class="card-title">Safe Haven</div>
+            <div class="card-role">Full Stack · Hackathon Build</div>
+          </div>
+          <span class="status-badge status-built">Built</span>
+        </div>
+        <p class="card-desc">Emergency resource finder that maps shelters, food banks, and crisis support services to users in need. Built under hackathon time pressure with a full working backend.</p>
+        <div class="card-highlights">
+          <div class="highlight">Real-time resource mapping with geolocation-based filtering</div>
+          <div class="highlight">Fast full-stack prototype delivered in 24-hour hackathon window</div>
+        </div>
+        <div class="card-tags">
+          <span class="tag">React</span><span class="tag">Node.js</span><span class="tag">Express</span><span class="tag">PostgreSQL</span>
+        </div>
+        <div class="card-footer">
+          <div class="card-links">
+            <a class="link-btn" style="opacity:0.4;pointer-events:none">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+              Private Repo
+            </a>
+          </div>
+          <span style="font-size:12px;color:var(--muted)">Hackathon · 2024</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section id="skills">
+    <div class="section-label">Technical Skills</div>
+    <div class="skills-grid">
+      <div class="skill-group">
+        <div class="skill-group-label">Languages</div>
+        <div class="skill-items">
+          <span class="skill-item">TypeScript</span>
+          <span class="skill-item">JavaScript</span>
+          <span class="skill-item">Python</span>
+          <span class="skill-item">C</span>
+          <span class="skill-item">SQL</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-label">Backend</div>
+        <div class="skill-items">
+          <span class="skill-item">Node.js</span>
+          <span class="skill-item">Express</span>
+          <span class="skill-item">Socket.io</span>
+          <span class="skill-item">REST APIs</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-label">AI / ML</div>
+        <div class="skill-items">
+          <span class="skill-item">Claude API</span>
+          <span class="skill-item">LangChain</span>
+          <span class="skill-item">RAG</span>
+          <span class="skill-item">HuggingFace</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-label">Data &amp; DB</div>
+        <div class="skill-items">
+          <span class="skill-item">PostgreSQL</span>
+          <span class="skill-item">PostGIS</span>
+          <span class="skill-item">Neon</span>
+          <span class="skill-item">Redis</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-label">Infrastructure</div>
+        <div class="skill-items">
+          <span class="skill-item">AWS EC2</span>
+          <span class="skill-item">Docker</span>
+          <span class="skill-item">Vercel</span>
+          <span class="skill-item">Railway</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-label">Testing</div>
+        <div class="skill-items">
+          <span class="skill-item">Jest</span>
+          <span class="skill-item">Selenium</span>
+          <span class="skill-item">DeepEval</span>
+          <span class="skill-item">CI/CD</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="about-strip">
+    <div class="about-card">
+      <div class="about-card-label">Education</div>
+      <div class="about-card-val">B.S. Computer Science<br><span style="font-size:13px;font-weight:400;color:var(--muted)">San Francisco State University · May 2026</span></div>
+    </div>
+    <div class="about-card">
+      <div class="about-card-label">Focus Areas</div>
+      <div class="about-card-val">AI Quality Engineering<br><span style="font-size:13px;font-weight:400;color:var(--muted)">Backend · SDET · AI Systems</span></div>
+    </div>
+  </div>
+
+  <section id="contact">
+    <div class="section-label">Let's Connect</div>
+    <div class="contact-row">
+      <div class="contact-left">
+        <h3>Open to opportunities</h3>
+        <p>Full-time roles in AI engineering, backend, and test automation · SF Bay Area · F-1 OPT</p>
+      </div>
+      <div class="contact-links">
+        <a href="https://linkedin.com/in/harry-kakadiya-836768295" target="_blank" class="btn btn-primary">LinkedIn</a>
+        <a href="mailto:harekrishna.kakadiya@gmail.com" class="btn btn-ghost">Email</a>
+        <a href="https://github.com/yaeger211202" target="_blank" class="btn btn-ghost">GitHub</a>
+      </div>
+    </div>
+  </section>
+
+</div>
+</body>
+</html>
